@@ -1,0 +1,16 @@
+{
+	"name": "cookie-provider",
+	"version": "9.9.9",
+	"description": "This is a very simple cookie provider",
+	"main": "app.js",
+	"scripts": {
+		"test": "echo \"No Tests at this point\" && exit 1",
+		"start": "nodemon app.js"
+	},
+	"author": "NiceWayToDoIT",
+	"license": "MIT",
+	"dependencies": {
+		"cookie-parser": "^1.4.3",
+		"express": "^4.16.4"
+	}
+}

@@ -10,12 +10,16 @@ const config = {
     'Access-Control-Allow-Methods': 'GET, OPTIONS',
     'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept',
     'Access-Control-Expose-Headers': 'Access-Token, Uid',
-  }
+  },
+  withCredentials: true,
 };
+
+let myFunc;
 
 class App extends Component {
   state = {
-    list: []
+    list: [],
+    count: 0,
   }
 
   setCookie = (name, value, daysToExpiry) => {
@@ -27,7 +31,7 @@ class App extends Component {
 
   componentDidMount() {
     axios
-      .get(`http://localhost:8888/test`)
+      .get(`http://localhost:8888/test`, config)
       .then(res => {
         let fakecookie = res.headers['fake-cookie'];
         console.log(fakecookie);
@@ -38,6 +42,33 @@ class App extends Component {
       .catch((res) => {
         console.log('Error', res);
       })
+
+
+    myFunc = setInterval(() => {
+      this.setState((prev) => {
+        return { count: prev.count + 1}
+      });
+      if (this.state.count > 3) {
+        console.warn(`@COUNT IS > than 3 [${this.state.count}]`);
+        clearInterval(myFunc);
+      }
+      const num = Math.floor(Math.random()*100);
+      axios
+        .get(`http://localhost:8888/gimmecookie?q=${num}`, config)
+        .then(res => {
+          
+          console.log(`Gimmi Call [${num}]`, res.data.name);
+        })
+        .catch((res) => {
+          console.log('CUSTOM FAIL:', res);
+        })
+    }, 8000);
+
+  }
+
+  componentWillUnmount() {
+    console.log('Unmount');
+    clearInterval(myFunc);
   }
 
   render() {

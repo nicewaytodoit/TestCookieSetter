@@ -5,6 +5,7 @@
 	"main": "app.js",
 	"scripts": {
 		"test": "echo \"No Tests at this point\" && exit 1",
+		"debug": "nodemon --inspect-brk --nolazy app.js",
 		"start": "nodemon app.js"
 	},
 	"author": "NiceWayToDoIT",
